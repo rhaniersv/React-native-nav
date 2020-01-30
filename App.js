@@ -1,60 +1,50 @@
-import React from 'react';
-import {StyleSheet, View, TextInput, Alert, Button} from 'react-native';
+import * as React from 'react';
+import {Button, View, Text} from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
-export class Login extends React.Component {
-  static navigationOptions = {
-    title: 'Login',
-  };
+class HomeScreen extends React.Component {
   render() {
-    // const {navigate} = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <TextInput style={styles.input} placeholder="Email" />
-        <TextInput
-          style={styles.input}
-          secureTextEntry={true}
-          placeholder="Senha"
-        />
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Home Screen</Text>
         <Button
-          style={styles.botao}
-          title="Logue-se"
-          onPress={() => Alert.alert('FUNCIONA!!!', 'Você clicou no botão')}
-          // onPress={() => navigate('Home')}
+          title="Go to Details"
+          onPress={() => this.props.navigation.navigate('Details')}
         />
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2C3E50',
-  },
-  input: {
-    marginTop: 50,
-    padding: 10,
-    width: 300,
-    backgroundColor: '#FFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    borderRadius: 3,
-  },
-  botao: {
-    width: 300,
-    height: 42,
-    marginTop: 10,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  botaoText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-});
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Details Screen</Text>
+        <Button
+          title="Go to Details... again"
+          onPress={() => this.props.navigation.navigate('Details')}
+        />
+      </View>
+    );
+  }
+}
 
-export default Login;
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Details: DetailsScreen,
+  },
+  {
+    initialRouteName: 'Home',
+  },
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
